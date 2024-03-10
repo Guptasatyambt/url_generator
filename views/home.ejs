@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+</head>
+<body>
+    <% if(locals.name){ %>
+        <h1>Hello<%= name %>! Welcome to the URL shortner </h1>
+    <% } else{ %>
+    <h1>Hello! Welcome to the URL shortner </h1>
+    <% } %>
+    <div class="right-container">
+          
+        <a class="login" href="/login">Log In/</a>
+        <a class="login" href="/signup">Sign Up</a>
+    </div>
+    <h3>Create new short Id</h3>
+    <% if(locals.id){ %>
+        <p>URL generated : http://localhost:4000/url/<%=id %></p>
+        <% } %>
+    <form method="POST" action="/url">
+        <label>Enter Your Original Url</label>
+        <input type="text" name="url" placeholder="www.example.com" />
+        <button type="submit">Generate</button>
+    </form>
+            <table style="width:100%">
+        <tr>
+            <th>shortUrl</th>
+            <th>render to</th>
+            <th>Action</th>
+        </tr>
+    </table>
+   <% urls.forEach(url => { %>
+       <table>
+        <tr>
+            <td><%= url.shortid %></td>
+            <td><%= url.redirecturl %></td>
+            <td><form method="get" action="/url/<%= url.shortid %>/delete">
+                <button type="submit" >Delete</button></form>
+                <form method="get" action="/url/<%= url.shortid %>">
+                    <button type="submit" >GO</button></form></td>
+               
+        </tr>
+        </table>
+   
+   <% }) %>
+</body>
+</html>
